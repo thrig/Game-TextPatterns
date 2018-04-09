@@ -1,0 +1,9 @@
+Changes
+LICENSE
+MANIFEST
+Makefile.PL
+README
+lib/Game/TextPatterns.pm
+t/00-load.t
+t/pod-coverage.t
+t/pod.t
