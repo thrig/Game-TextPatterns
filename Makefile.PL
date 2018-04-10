@@ -30,11 +30,12 @@ my %params = (
         'lib'        => 0,
     },
     PREREQ_PM => {
-        'Moo'                    => 0,
-        'Moox::Rebuild'                    => 0,
-        'Scalar::Util'           => 0,
-        'namespace::clean'       => 0,
-        'strict'                 => 0,
+        'Carp'             => 0,
+        'Moo'              => 0,
+        'MooX::Rebuild'    => 0,
+        'Scalar::Util'     => 0,
+        'namespace::clean' => 0,
+        'strict'           => 0,
     },
 
     META_MERGE => {

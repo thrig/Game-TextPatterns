@@ -22,4 +22,5 @@ eval "use Pod::Coverage $min_pc";
 plan skip_all => "Pod::Coverage $min_pc required for testing POD coverage"
   if $@;
 
-all_pod_coverage_ok();
+# on account of frequent coverage failures on these from CPAN smokers...
+all_pod_coverage_ok( { trustme => [qr/BUILD|new|clone|rebuild/] } );
