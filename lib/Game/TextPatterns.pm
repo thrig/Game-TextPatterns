@@ -160,8 +160,7 @@ Game::TextPatterns - generate patterns of text
 
   my $v = Game::TextPatterns->new( pattern => ".#\n#." );
 
-  $v->multiply(7,3)
-    ->border(1,'#')->border(1,'.')->border(1,'#');
+  $v->multiply(7,3)->border->border(1, '.')->border;
 
   print $v->string;
 

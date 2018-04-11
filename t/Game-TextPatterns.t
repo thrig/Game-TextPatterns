@@ -66,7 +66,7 @@ is( $f->string, "...#\n.###\n", "flipped rows and columns" );
 
 # for the SYNOPSIS
 #my $v = Game::TextPatterns->new( pattern => ".#\n#." );
-#$v->multiply(7,3)->border(1,'#')->border(1,'.')->border(1,'#');
+#$v->multiply(7,3)->border->border(1, '.')->border;
 #diag "\n" . $v->string;
 
 done_testing(16);
