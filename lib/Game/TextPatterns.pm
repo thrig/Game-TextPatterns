@@ -14,7 +14,7 @@ use Moo;
 use namespace::clean;
 use Scalar::Util qw(looks_like_number);
 
-our $VERSION = '0.42';
+our $VERSION = '0.73';
 
 with 'MooX::Rebuild';    # for ->rebuild (which differs from ->clone)
 
@@ -507,6 +507,9 @@ creates
   ##...#..####...#..##
   .##..##.#..##..##.#.
 
+Consult the C<eg/> and C<t/> directories under this module's
+distribution for more example code.
+
 =head1 DESCRIPTION
 
 L<Game::TextPatterns> contains methods that generate and alter text
@@ -744,9 +747,6 @@ improvements which will probably break backwards compatibility.
 =head1 SEE ALSO
 
 L<https://github.com/thrig/ministry-of-silly-vaults/>
-
-Consult the C<t/> directory under this module's distribution for
-example code.
 
 Another option might be to use a standard image library and then devise
 a conversion such that particular colors become particular ASCII symbols

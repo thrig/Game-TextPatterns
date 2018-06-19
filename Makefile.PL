@@ -17,6 +17,8 @@ my %params = (
     AUTHOR       => 'Jeremy Mates <jmates@cpan.org>',
     VERSION_FROM => 'lib/Game/TextPatterns.pm',
 
+    MIN_PERL_VERSION => '5.14.0',
+
     LICENSE  => 'bsd',
     PL_FILES => {},
 
