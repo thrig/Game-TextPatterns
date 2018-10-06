@@ -428,11 +428,11 @@ Game::TextPatterns - generate patterns of text
 
   use Game::TextPatterns;
 
-  my $v = Game::TextPatterns->new( pattern => ".#\n#." );
+  my $pat = Game::TextPatterns->new( pattern => ".#\n#." );
 
-  $v->multiply(7,3)->border->border(1, '.')->border;
+  $pat->multiply(7,3)->border->border(1, '.')->border;
 
-  print $v->string;
+  print $pat->string;
 
 Ta-da! You should now have an Angband checker type vault. (Doors not
 included. Items and monsters may cost extra.)
@@ -455,8 +455,8 @@ Items might be added by applying an appropriate B<mask>:
   my $i = Game::TextPatterns->new( pattern => "." );
   $i->multiply( 19, 11 );
   $i->white_noise( '?', .1 );
-  $v->mask( '.', $i );
-  print $v->string;
+  $pat->mask( '.', $i );
+  print $pat->string;
 
 Which could result in
 
@@ -475,7 +475,7 @@ Which could result in
 
 And this pattern adjusted with B<four_up>, twice
 
-  my $pat = Game::TextPatterns->new( pattern => <<"EOF" );
+  $pat = Game::TextPatterns->new( pattern => <<"EOF" );
   ..##.
   ...##
   #....
@@ -746,12 +746,27 @@ improvements which will probably break backwards compatibility.
 
 =head1 SEE ALSO
 
-L<https://github.com/thrig/ministry-of-silly-vaults/>
+L<Game::DijkstraMap> can path-find across text patterns, handy if one
+desires maps that do not completely thwart a player.
+
+  use 5.24.0;
+  ...
+  $pat = $pat->four_up->four_up;
+  my $dm = Game::DijkstraMap->new;
+  $dm->map( $pat->as_array );
+  # assuming the pattern did not have any goals already on it
+  my $uc = $dm->unconnected;
+  $dm->update( [ $uc->[0]->@*, $dm->min_cost ] );
+  $dm->recalc;
+  # then check if anything still unconnected...
 
 Another option might be to use a standard image library and then devise
 a conversion such that particular colors become particular ASCII symbols
 (or combinations of symbols, with Unicode or control sequences to set
 colors or such).
+
+And then there is also the
+L<https://github.com/thrig/ministry-of-silly-vaults/>
 
 =head1 AUTHOR
 
