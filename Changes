@@ -1,5 +1,10 @@
 See also the git repository.
 
+1.45    2019-10-03
+        Randomly add randomly method to randomly adjust the pattern via
+        a callback. New Game::TextPatterns::Util package to hold some
+        now-user-callable utility functions.
+
 1.24    2019-06-23
         Add fill_4way and fill_8way methods.
 
