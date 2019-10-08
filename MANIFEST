@@ -1,11 +1,15 @@
+Build.PL
 Changes
 LICENSE
 MANIFEST
-Makefile.PL
 README
 eg/walls-and-water
 lib/Game/TextPatterns.pm
+lib/Game/TextPatterns/Util.pm
 t/00-load.t
+t/Game-TextPatterns-Util.t
 t/Game-TextPatterns.t
 t/pod-coverage.t
 t/pod.t
+META.yml
+META.json

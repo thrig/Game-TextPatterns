@@ -3,7 +3,7 @@
 # generate patterns of text. run perldoc(1) on this file for documentation
 
 package Game::TextPatterns;
-our $VERSION = '1.45';
+our $VERSION = '1.46';
 
 use 5.24.0;
 use warnings;
@@ -385,13 +385,15 @@ sub randomly {
     my ($cols, $rows) = (length $pat->[0], scalar $pat->@*);
     my $total   = $cols * $rows;
     my $to_fill = int($total * $percent);
+    $cols--;
+    $rows--;
     if ($to_fill > 0) {
-        for my $row ($pat->@*) {
-            for my $i (0 .. $cols - 1) {
-                if (substr($row, $i, 1) =~ m/$re/ and rand() < $to_fill / $total) {
+        while (my ($r, $row) = each $pat->@*) {
+            for my $c (0 .. $cols) {
+                if (substr($row, $c, 1) =~ m/$re/ and rand() < $to_fill / $total) {
                     # NOTE exposes internals but I have no plans of
                     # changing them
-                    $fn->($i, \$row, $rows, $cols, $pat);
+                    $fn->($pat, [ $c, $r ], $cols, $rows);
                     $to_fill--;
                 }
                 $total--;
@@ -830,17 +832,16 @@ Similar to B<white_noise> but calls a callback function for each
 matching cell randomly found. For example to act on 10% of cells that
 match C<#> use
 
+    use constant { ROW => 1, COL => 0, };
     $m->randomly(
         qr/#/, 0.1,
         sub {
-            my ($i, $rref, $rows, $cols, $pat) = @_;
-            substr $$rref, $i, 1, 'x';
+            my ($pat, $point, $max_cols, $max_rows) = @_;
+            substr $pat->[$point->[ROW]], $point->[COL], 1, 'x';
         }
     );
 
-where C<i> is the index (for use with, say, C<substr>) in C<rref> where
-the character can be found. The rest of the variables will help orient
-operations should multi-row edits be necessary on the pattern reference.
+as internally the pattern is stored as an array of strings.
 
 =item B<string> I<sep>
 
@@ -857,6 +858,8 @@ Fills the object with the given percentage of the I<char> randomly.
 
     # 50% fill with 'x'
     $v->white_noise( 'x', .5 );
+
+See B<randomly> for a similar routine to this one, if more complicated.
 
 =back
 
@@ -875,7 +878,7 @@ L<https://github.com/thrig/Game-TextPatterns>
 =head2 Known Issues
 
 Probably should have used a 2D array instead of an array of strings,
-internally.
+internally. But that is very unlikely to change at this point.
 
 Probably needs more tests for various edge conditions.
 
@@ -884,9 +887,15 @@ B<flip_four> and B<four_up> probably need better names.
 Some of the calling arguments to various methods likely need
 improvements which will probably break backwards compatibility.
 
-Unicode is not really supported, would instead need to operate on
-characters or potentially even allow for lengths of text in each cell of
-the pattern grid.
+Humans are really good at mixing up the col,row (x,y) points with
+other forms especially given the different orientation of the
+internal pattern. Favor non-square patterns for tests to better
+expose such mixups.
+
+Unicode is not really supported; would instead need to operate on
+characters or potentially even allow for lengths of text in each cell
+of the pattern grid (but that gets back to the array of strings
+thing, above).
 
 =head1 SEE ALSO
 
@@ -920,7 +929,7 @@ thrig - Jeremy Mates (cpan:JMATES) C<< <jmates at cpan.org> >>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2018,2019 by Jeremy Mates
+Copyright (C) 2018 by Jeremy Mates
 
 This program is distributed under the (Revised) BSD License:
 L<http://www.opensource.org/licenses/BSD-3-Clause>

@@ -3,6 +3,9 @@
 use strict;
 use warnings;
 
+# col,row (x,y)
+use constant { COL => 0, ROW => 1, };
+
 use Test::Most;    # test count is down at bottom
 
 use Game::TextPatterns;
@@ -307,26 +310,26 @@ EOF
 # "randomly" we test things (scare quotes as "srand" was set above)
 {
     my $m = Game::TextPatterns->new(pattern => <<'EOF' );
-...
-.#.
-...
+....
+..#.
 EOF
     $m->randomly(
         qr/#/, 1.0,
         sub {
-            my ($i, $rref, $rows, $cols, $pat) = @_;
-            is($i, 1, 'column of #');
-            is($$rref, '.#.');
+            my ($pat, $point, $cols, $rows) = @_;
+            eq_or_diff($pat,             [ '....', '..#.' ]);
+            eq_or_diff($point,           [ 2,      1 ]);
+            eq_or_diff([ $cols, $rows ], [ 3,      1 ]);
         }
     );
     $m->randomly(
         qr/[.]/, 0.5,
         sub {
-            my ($i, $rref) = @_;
-            substr $$rref, $i, 1, 'x';
+            my ($pat, $p) = @_;
+            substr $pat->[ $p->[ROW] ], $p->[COL], 1, 'x';
         }
     );
-    eq_or_diff($m->pattern, [ "x.x", ".#.", ".xx" ]);
+    eq_or_diff($m->pattern, [ 'x.x.', '..#x' ]);
 }
 
 # for the SYNOPSIS
@@ -339,4 +342,4 @@ EOF
 #$v->mask( '.', $i );
 #diag "\n", $v->string;
 
-done_testing 63
+done_testing 64
