@@ -2,6 +2,7 @@
 
 use strict;
 use warnings;
+use File::Spec::Functions qw(splitpath);
 
 # col,row (x,y)
 use constant { COL => 0, ROW => 1, };
@@ -97,7 +98,7 @@ EOF
     my $totrim = Game::TextPatterns->new(pattern => [ "cxxr", "cyyr", "czzr" ]);
     # error is generated from an internal routine, not crop, but needs
     # to be as if from the caller, not that internal routine nor crop
-    my $this_file = __FILE__;
+    my $this_file = (splitpath __FILE__)[-1];
     throws_ok(sub { $totrim->crop([ 0, 0 ], [ 99, 99 ]) },
         qr/crop point.*$this_file/);
 

@@ -1,5 +1,9 @@
 See also the git repository.
 
+1.47    2019-10-09
+        Try to avoid a Windows path issue in a test. Update Build.PL
+        docs about Centos8 still being a Perl core chop-shop.
+
 1.46    2019-10-08
         Bugfixen, improve randomly (via breaking interface changes) so
         that it better can be used with the adj_* functions.

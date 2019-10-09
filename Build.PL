@@ -13,10 +13,11 @@ my $builder = Module::Build->new(
     configure_requires => { 'Module::Build' => '0.4004', },
     test_requires      => {
         'Algorithm::Diff' => 0,
+        'File::Spec'      => 0,
         'Test::More'      => '0.88',    # done_testing
         'Test::Most'      => '0',
         # TODO same story as 'strict' below
-        'constant'        => '0',
+        'constant' => '0',
     },
     requires => {
         'perl'             => '5.24.0',
@@ -26,9 +27,10 @@ my $builder = Module::Build->new(
         'MooX::Rebuild'    => '0',
         'Scalar::Util'     => '0',
         'namespace::clean' => '0',
-        # TODO probably not needed if Centos8 has dropped the chop-shop
-        # on what used to be their perl-core and etc RPMs
-        'strict'           => '0',
+        # TODO Centos8 still has the "perl-core" chop-shop thing, maybe
+        # in Centos9 this will (finally) be fixed? until then, pull in
+        # what RedHat has broken out so RPM deps don't derp
+        'strict' => '0',
     },
     sign           => 1,
     add_to_cleanup => ['Game-TextPatterns-*'],

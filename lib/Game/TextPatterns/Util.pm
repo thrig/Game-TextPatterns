@@ -3,7 +3,7 @@
 # some utility subs for text patterns
 
 package Game::TextPatterns::Util;
-our $VERSION = '1.46';
+our $VERSION = '1.47';
 
 use strict;
 use warnings;

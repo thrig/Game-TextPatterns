@@ -3,7 +3,7 @@
 # generate patterns of text. run perldoc(1) on this file for documentation
 
 package Game::TextPatterns;
-our $VERSION = '1.46';
+our $VERSION = '1.47';
 
 use 5.24.0;
 use warnings;
